@@ -1,6 +1,7 @@
 package mx.uam.integracion.Inscripciones.controller;
 
 
+import mx.uam.integracion.Inscripciones.entities.Alumno;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,5 +13,10 @@ public class TestController {
     @GetMapping("/test")
     public String test() {
         return "Está funcionando---";
+    }
+
+    @GetMapping("/alumno")
+    public Alumno alumno() {
+        return new Alumno(001L,"2203024286", "Fernanda", "Lara", "CCD");
     }
 }
