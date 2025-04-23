@@ -1,6 +1,8 @@
 package mx.uam.integracion.Inscripciones.service.impl;
 
+import mx.uam.integracion.Inscripciones.dto.AlumnoDTO;
 import mx.uam.integracion.Inscripciones.entities.Alumno;
+import mx.uam.integracion.Inscripciones.mapper.AlumnoMapper;
 import mx.uam.integracion.Inscripciones.repository.IAlumnoRepository;
 import mx.uam.integracion.Inscripciones.service.IAlumnoService;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,11 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public Alumno update(Long id, Alumno alumno) {
         alumno.setId(id);
         return alumnoRepository.save(alumno);
+    }
+    public AlumnoDTO save(AlumnoDTO alumnoDTO) {
+        Alumno alumno = AlumnoMapper.INSTANCE.alumnoDTOToAlumno(alumnoDTO);
+        Alumno saved = alumnoRepository.save(alumno);
+        return AlumnoMapper.INSTANCE.alumnoToAlumnoDTO(saved);
     }
 
     public void delete(Long id) {
