@@ -11,5 +11,8 @@ public interface IAlumnoService {
     Alumno save(Alumno alumno);
     Alumno update(Long id, Alumno alumno);
     void delete(Long id);
+    List<Alumno> getByNombre(String nombre);
+    List<Alumno> getByDivision(String division);
+
 }
 

@@ -44,4 +44,16 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public void delete(Long id) {
         alumnoRepository.deleteById(id);
     }
+
+    @Override
+    public List<Alumno> getByNombre(String nombre) {
+        return alumnoRepository.findByNombre(nombre);
+    }
+
+    @Override
+    public List<Alumno> getByDivision(String division) {
+        return alumnoRepository.findByDivision(division);
+    }
+
+
 }
