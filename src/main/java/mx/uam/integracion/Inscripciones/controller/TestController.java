@@ -15,8 +15,5 @@ public class TestController {
         return "Está funcionando---";
     }
 
-    @GetMapping("/alumno")
-    public Alumno alumno() {
-        return new Alumno(001L,"2203024286", "Fernanda", "Lara", "CCD");
-    }
+    
 }
