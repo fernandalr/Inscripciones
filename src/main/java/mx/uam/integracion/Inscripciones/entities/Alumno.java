@@ -1,20 +1,21 @@
 package mx.uam.integracion.Inscripciones.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "alumno")
 public class Alumno {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "matricula")
     private String matricula;
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "apellido")
     private String apellido;
+    @Column(name = "division")
     private String division;
-
-
-    public Alumno(Long id, String matricula, String nombre, String apellido, String division) {
-        this.id = id;
-        this.matricula = matricula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.division = division;
-    }
 
     public Long getId() {
         return id;
