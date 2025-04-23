@@ -10,7 +10,6 @@ public class CursoDTO {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -18,7 +17,6 @@ public class CursoDTO {
     public String getNombreCurso() {
         return nombreCurso;
     }
-
     public void setNombreCurso(String nombreCurso) {
         this.nombreCurso = nombreCurso;
     }
@@ -26,7 +24,6 @@ public class CursoDTO {
     public Long getClaveCurso() {
         return claveCurso;
     }
-
     public void setClaveCurso(Long claveCurso) {
         this.claveCurso = claveCurso;
     }
@@ -34,7 +31,6 @@ public class CursoDTO {
     public String getDivision() {
         return division;
     }
-
     public void setDivision(String division) {
         this.division = division;
     }

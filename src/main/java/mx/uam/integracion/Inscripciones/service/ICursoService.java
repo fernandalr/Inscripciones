@@ -1,12 +1,15 @@
 package mx.uam.integracion.Inscripciones.service;
+
+import mx.uam.integracion.Inscripciones.dto.CursoDTO;
 import mx.uam.integracion.Inscripciones.entities.Curso;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface ICursoService {
+public interface ICursoService{
     List<Curso> getAll();
-    Optional<Curso> getById(Long id);
-    Curso save(Curso curso);
-    Curso update(Long id, Curso curso);
+    CursoDTO save(CursoDTO cursoDTO);
+    Optional<CursoDTO> getById(Long id);
+    CursoDTO update(Long id, CursoDTO cursoDTO);
     void delete(Long id);
 }

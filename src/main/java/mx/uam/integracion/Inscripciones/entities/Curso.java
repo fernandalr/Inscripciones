@@ -21,7 +21,6 @@ public class Curso {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -29,7 +28,6 @@ public class Curso {
     public String getNombreCurso() {
         return nombreCurso;
     }
-
     public void setNombreCurso(String nombreCurso) {
         this.nombreCurso = nombreCurso;
     }
@@ -37,7 +35,6 @@ public class Curso {
     public long getClaveCurso() {
         return claveCurso;
     }
-
     public void setClaveCurso(long claveCurso) {
         this.claveCurso = claveCurso;
     }
@@ -45,7 +42,6 @@ public class Curso {
     public String getDivision() {
         return division;
     }
-
     public void setDivision(String division) {
         this.division = division;
     }
