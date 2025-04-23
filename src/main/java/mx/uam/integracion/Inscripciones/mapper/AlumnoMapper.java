@@ -9,6 +9,6 @@ import org.mapstruct.factory.Mappers;
 public interface AlumnoMapper {
     AlumnoMapper INSTANCE = Mappers.getMapper(AlumnoMapper.class);
 
-    AlumnoDTO alumnoToAlumnoDTO(Alumno alumno);
     Alumno alumnoDTOToAlumno(AlumnoDTO alumnoDTO);
+    AlumnoDTO alumnoToAlumnoDTO(Alumno alumno);
 }

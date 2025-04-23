@@ -7,7 +7,6 @@ public class AlumnoDTO {
     private String apellido;
     private String division;
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }
