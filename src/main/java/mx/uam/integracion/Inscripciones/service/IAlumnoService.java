@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAlumnoService {
-    List<Alumno> getAll();
-    //Optional<Alumno> getById(Long id);
+    List<AlumnoDTO> getAll();
     Alumno save(Alumno alumno);
     Alumno update(Long id, Alumno alumno);
     void delete(Long id);

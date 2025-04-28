@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlumnoServiceImpl implements IAlumnoService {
@@ -22,8 +23,19 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public List<Alumno> getAll() {
-        return alumnoRepository.findAll();
+    public List<AlumnoDTO> getAll() {
+        List<Alumno> alumnos = alumnoRepository.findAll();
+        return alumnos.stream()
+                .map(this::convertToDTO) // Convierte cada Alumno a AlumnoDTO
+                .collect(Collectors.toList());
+    }
+    private AlumnoDTO convertToDTO(Alumno alumno) {AlumnoDTO dto = new AlumnoDTO();
+        dto.setId(alumno.getId());
+        dto.setMatricula(alumno.getMatricula());
+        dto.setNombre(alumno.getNombre());
+        dto.setApellido(alumno.getApellido());
+        dto.setDivision(alumno.getDivision());
+        return dto;
     }
 
     @Override
