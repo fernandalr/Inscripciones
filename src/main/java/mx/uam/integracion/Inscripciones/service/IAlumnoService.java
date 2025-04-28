@@ -17,5 +17,7 @@ public interface IAlumnoService {
 
     AlumnoDTO save(AlumnoDTO alumnoDTO);
     Optional <AlumnoDTO>getById(Long id);
+
+    AlumnoDTO update(Long id, AlumnoDTO alumnoDTO);
 }
 

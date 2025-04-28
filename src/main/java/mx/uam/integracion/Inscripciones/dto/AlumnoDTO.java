@@ -7,43 +7,18 @@ public class AlumnoDTO {
     private String apellido;
     private String division;
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getMatricula() {return matricula;}
+    public void setMatricula(String matricula) {this.matricula = matricula;}
 
-    public String getMatricula() {
-        return matricula;
-    }
+    public String getNombre() {return nombre;}
+    public void setNombre(String nombre) {this.nombre = nombre;}
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
+    public String getApellido() {return apellido;}
+    public void setApellido(String apellido) {this.apellido = apellido;}
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getDivision() {
-        return division;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
-    }
+    public String getDivision() {return division;}
+    public void setDivision(String division) {this.division = division;}
 }

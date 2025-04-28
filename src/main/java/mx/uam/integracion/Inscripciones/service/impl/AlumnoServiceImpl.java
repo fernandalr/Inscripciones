@@ -67,4 +67,32 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public List<Alumno> getByDivision(String division) {
         return alumnoRepository.findByDivision(division);
     }
+    
+    @Override
+    public AlumnoDTO update(Long id, AlumnoDTO alumnoDTO) {
+        Optional<Alumno> optionalAlumno = alumnoRepository.findById(id);
+        if (optionalAlumno.isPresent()) {
+            Alumno alumno = optionalAlumno.get();
+
+            alumno.setMatricula(alumnoDTO.getMatricula());
+            alumno.setNombre(alumnoDTO.getNombre());
+            alumno.setApellido(alumnoDTO.getApellido());
+            alumno.setDivision(alumnoDTO.getDivision());
+            Alumno updatedAlumno = alumnoRepository.save(alumno);
+
+            return convertirADTO(updatedAlumno);
+        } else {
+            throw new RuntimeException("Alumno no encontrado"); // O maneja la excepción de otra manera
+        }
+    }
+
+    private AlumnoDTO convertirADTO(Alumno alumno) {
+        AlumnoDTO dto = new AlumnoDTO();
+        dto.setId(alumno.getId());
+        dto.setMatricula(alumno.getMatricula());
+        dto.setNombre(alumno.getNombre());
+        dto.setApellido(alumno.getApellido());
+        dto.setDivision(alumno.getDivision());
+        return dto;
+    }
 }
