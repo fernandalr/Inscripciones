@@ -1,27 +1,16 @@
-package mx.uam.integracion.Inscripciones.entities;
+package mx.uam.integracion.Inscripciones.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "curso")
-public class Curso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "nombre_curso")
+public class CursoDTO {
+    private Long id;
     private String nombreCurso;
-
-    @Column(name = "clave_curso")
-    private long claveCurso;
-
-    @Column(name = "division")
+    private Long claveCurso;
     private String division;
 
-    public long getId() {
+    // Getters y Setters
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,10 +21,10 @@ public class Curso {
         this.nombreCurso = nombreCurso;
     }
 
-    public long getClaveCurso() {
+    public Long getClaveCurso() {
         return claveCurso;
     }
-    public void setClaveCurso(long claveCurso) {
+    public void setClaveCurso(Long claveCurso) {
         this.claveCurso = claveCurso;
     }
 
