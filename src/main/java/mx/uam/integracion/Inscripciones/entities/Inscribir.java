@@ -1,12 +1,10 @@
 package mx.uam.integracion.Inscripciones.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "inscribir")
-
 public class Inscribir {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,17 +13,18 @@ public class Inscribir {
     @Column(name = "estatus", nullable = false, length = 30)
     private String estatus;
 
-    @Column(name = "fecha_inscripcion", nullable = false, length = 30)
+    @Column(name = "fecha_inscripcion", nullable = false)
     private LocalDate fechaInscripcion;
 
     @ManyToOne
-    @JoinColumn(name = "id_alumno", referencedColumnName = "id", nullable = false)
-    private Alumno alumno;
+    @JoinColumn(name = "alumno_id", referencedColumnName = "id", nullable = false)
+    private Alumno alumnoId;
 
     @ManyToOne
-    @JoinColumn(name = "id_curso", referencedColumnName = "id", nullable = false)
-    private Curso curso;
+    @JoinColumn(name = "curso_id", referencedColumnName = "id", nullable = false)
+    private Curso cursoId;
 
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -50,19 +49,19 @@ public class Inscribir {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public Alumno getAlumno() {
-        return alumno;
+    public Alumno getAlumnoId() {
+        return alumnoId;
     }
 
-    public void setAlumno(Alumno alumno) {
-        this.alumno = alumno;
+    public void setAlumnoId(Alumno alumnoId) {
+        this.alumnoId = alumnoId;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Curso getCursoId() {
+        return cursoId;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursoId(Curso cursoId) {
+        this.cursoId = cursoId;
     }
 }

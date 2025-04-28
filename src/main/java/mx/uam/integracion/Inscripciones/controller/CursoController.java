@@ -25,18 +25,20 @@ public class CursoController {
         return cursoService.getAll();
     }
 
-    @PostMapping
-    public ResponseEntity<CursoDTO> createCurso(@RequestBody CursoDTO cursoDTO) {
-        CursoDTO createdCurso = cursoService.save(cursoDTO);
-        return new ResponseEntity<>(createdCurso, HttpStatus.CREATED);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<CursoDTO> getCursoById(@PathVariable Long id) {
         return cursoService.getById(id)
                 .map(cursoDTO -> new ResponseEntity<>(cursoDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PostMapping
+    public ResponseEntity<CursoDTO> createCurso(@RequestBody CursoDTO cursoDTO) {
+        CursoDTO createdCurso = cursoService.save(cursoDTO);
+        return new ResponseEntity<>(createdCurso, HttpStatus.CREATED);
+    }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<CursoDTO> updateCurso(@PathVariable Long id, @RequestBody CursoDTO cursoDTO) {
