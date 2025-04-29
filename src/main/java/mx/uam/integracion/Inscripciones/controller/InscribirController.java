@@ -27,20 +27,20 @@ public class InscribirController {
     }
 
     @PostMapping
-    public ResponseEntity<InscribirDTO> createInscripcion(@RequestBody InscribirDTO inscribirDTO) {
+    public ResponseEntity<String> createInscripcion(@RequestBody InscribirDTO inscribirDTO) {
         InscribirDTO createdInscripcion = inscribirService.save(inscribirDTO);
-        return new ResponseEntity<>(createdInscripcion, HttpStatus.CREATED);
+        return new ResponseEntity<>("El regitro fué guardado con éxito", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InscribirDTO> updateInscripcion(@PathVariable Long id, @RequestBody InscribirDTO inscribirDTO) {
+    public ResponseEntity<String> updateInscripcion(@PathVariable Long id, @RequestBody InscribirDTO inscribirDTO) {
         InscribirDTO updatedInscripcion = inscribirService.update(id, inscribirDTO);
-        return new ResponseEntity<>(updatedInscripcion, HttpStatus.OK);
+        return new ResponseEntity<>("El registro ha sido actualizado exitosamente", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInscripcion(@PathVariable Long id) {
+    public ResponseEntity<String> deleteInscripcion(@PathVariable Long id) {
         inscribirService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("El registro ha sido borrado con éxito.", HttpStatus.OK);
     }
 }
