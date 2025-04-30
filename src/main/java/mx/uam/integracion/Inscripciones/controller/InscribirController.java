@@ -27,6 +27,20 @@ public class InscribirController {
         return new ResponseEntity<>(inscripciones, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<InscribirDTO> getInscripcionById(@PathVariable Long id) {
+        try {
+            InscribirDTO inscripcion = inscribirService.findById(id);
+            return new ResponseEntity<>(inscripcion, HttpStatus.OK);
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("No se encontró una inscripción con el ID: " + id);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            System.out.println("Error al obtener inscripción con ID: " + id + " - " + ex.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<String> createInscripcion(@RequestBody InscribirDTO inscribirDTO) {
         try {
@@ -52,7 +66,7 @@ public class InscribirController {
     @PatchMapping("/{id}")
     public ResponseEntity<String> partialUpdateInscripcion(@PathVariable Long id, @RequestBody InscribirDTO inscribirDTO) {
         try {
-            // Reutilizamos `update` para realizar actualizaciones parciales
+            // Llamar al servicio para manejar la lógica de actualización parcial
             InscribirDTO updatedInscripcion = inscribirService.update(id, inscribirDTO);
             System.out.println("Inscripción actualizada parcialmente: " + updatedInscripcion);
             return new ResponseEntity<>("El registro ha sido actualizado parcialmente con éxito.", HttpStatus.OK);
@@ -78,4 +92,5 @@ public class InscribirController {
             return new ResponseEntity<>("Error al eliminar la inscripción. " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

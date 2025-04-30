@@ -9,4 +9,5 @@ public interface IInscribirService {
     InscribirDTO save(InscribirDTO inscribirDTO);
     InscribirDTO update(Long id, InscribirDTO inscribirDTO);
     void delete(Long id);
+    InscribirDTO findById(Long id); // Nuevo método
 }
