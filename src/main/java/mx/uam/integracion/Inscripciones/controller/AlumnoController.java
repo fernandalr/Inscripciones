@@ -20,6 +20,13 @@ public class AlumnoController {
         this.alumnoService = alumnoService;
     }
 
+    //Obtener todos los registros
+    @GetMapping
+    public ResponseEntity<List<AlumnoDTO>> getAllAlumnos() {
+        List<AlumnoDTO> alumnos = alumnoService.getAll();
+        return new ResponseEntity<>(alumnos, HttpStatus.OK);
+    }
+
     //Obtener el registro del alumno por id
     @GetMapping("/{id}")
     public ResponseEntity<AlumnoDTO> getAlumno(@PathVariable Long id) {

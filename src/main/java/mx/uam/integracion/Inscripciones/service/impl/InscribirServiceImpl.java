@@ -1,13 +1,15 @@
 package mx.uam.integracion.Inscripciones.service.impl;
 
+import mx.uam.integracion.Inscripciones.dto.InscribirDTO;
 import mx.uam.integracion.Inscripciones.entities.Inscribir;
+import mx.uam.integracion.Inscripciones.mapper.InscribirMapper;
 import mx.uam.integracion.Inscripciones.repository.IInscribirRepository;
 import mx.uam.integracion.Inscripciones.service.IInscribirService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InscribirServiceImpl implements IInscribirService {
@@ -20,44 +22,29 @@ public class InscribirServiceImpl implements IInscribirService {
     }
 
     @Override
-    public List<Inscribir> getAll() {
-        return inscribirRepository.findAll();
+    public List<InscribirDTO> getAll() {
+        List<Inscribir> inscripciones = inscribirRepository.findAll();
+        return inscripciones.stream()
+                .map(InscribirMapper.INSTANCE::inscribirToInscribirDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Inscribir> getById(Long id) {
-        return inscribirRepository.findById(id);
+    public InscribirDTO save(InscribirDTO inscribirDTO) {
+        Inscribir inscribir = InscribirMapper.INSTANCE.inscribirDTOToInscribir(inscribirDTO);
+        Inscribir savedInscribir = inscribirRepository.save(inscribir);
+        return InscribirMapper.INSTANCE.inscribirToInscribirDTO(savedInscribir);
     }
 
     @Override
-    public Inscribir save(Inscribir inscribir) {
-        return inscribirRepository.save(inscribir);
-    }
-
-    @Override
-    public Inscribir update(Long id, Inscribir inscribir) {
-        Optional<Inscribir> existente = inscribirRepository.findById(id);
-        if (existente.isPresent()) {
-            inscribir.setId(id);
-            return inscribirRepository.save(inscribir);
+    public InscribirDTO update(Long id, InscribirDTO inscribirDTO) {
+        if (!inscribirRepository.existsById(id)) {
+            throw new RuntimeException("Inscripción no encontrada con id: " + id);
         }
-        return null;
-    }
-
-    @Override
-    public Inscribir patch(Long id, Inscribir parcial) {
-        Optional<Inscribir> existente = inscribirRepository.findById(id);
-        if (existente.isPresent()) {
-            Inscribir actual = existente.get();
-
-            if (parcial.getEstatus() != null) actual.setEstatus(parcial.getEstatus());
-            if (parcial.getFechaInscripcion() != null) actual.setFechaInscripcion(parcial.getFechaInscripcion());
-            if (parcial.getAlumno() != null) actual.setAlumno(parcial.getAlumno());
-            if (parcial.getCurso() != null) actual.setCurso(parcial.getCurso());
-
-            return inscribirRepository.save(actual);
-        }
-        return null;
+        Inscribir inscribir = InscribirMapper.INSTANCE.inscribirDTOToInscribir(inscribirDTO);
+        inscribir.setId(id);
+        Inscribir updatedInscribir = inscribirRepository.save(inscribir);
+        return InscribirMapper.INSTANCE.inscribirToInscribirDTO(updatedInscribir);
     }
 
     @Override
