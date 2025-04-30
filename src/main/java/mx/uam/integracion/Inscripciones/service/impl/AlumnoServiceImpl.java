@@ -6,6 +6,7 @@ import mx.uam.integracion.Inscripciones.mapper.AlumnoMapper;
 import mx.uam.integracion.Inscripciones.repository.IAlumnoRepository;
 import mx.uam.integracion.Inscripciones.service.IAlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,6 +68,9 @@ public class AlumnoServiceImpl implements IAlumnoService {
 
     @Override
     public void delete(Long id) {
+        if (!alumnoRepository.existsById(id)) {
+            throw new EmptyResultDataAccessException("No se encontró el ID: " + id, 1);
+        }
         alumnoRepository.deleteById(id);
     }
 

@@ -6,6 +6,7 @@ import mx.uam.integracion.Inscripciones.mapper.InscribirMapper;
 import mx.uam.integracion.Inscripciones.repository.IInscribirRepository;
 import mx.uam.integracion.Inscripciones.service.IInscribirService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class InscribirServiceImpl implements IInscribirService {
 
     @Override
     public List<InscribirDTO> getAll() {
+        // Cargar entidades completas de las relaciones (alumno y curso) al obtener inscripciones
         List<Inscribir> inscripciones = inscribirRepository.findAll();
         return inscripciones.stream()
                 .map(InscribirMapper.INSTANCE::inscribirToInscribirDTO)
@@ -31,6 +33,7 @@ public class InscribirServiceImpl implements IInscribirService {
 
     @Override
     public InscribirDTO save(InscribirDTO inscribirDTO) {
+        // Solo se procesan los IDs al hacer POST
         Inscribir inscribir = InscribirMapper.INSTANCE.inscribirDTOToInscribir(inscribirDTO);
         Inscribir savedInscribir = inscribirRepository.save(inscribir);
         return InscribirMapper.INSTANCE.inscribirToInscribirDTO(savedInscribir);
@@ -49,6 +52,10 @@ public class InscribirServiceImpl implements IInscribirService {
 
     @Override
     public void delete(Long id) {
+        if (!inscribirRepository.existsById(id)) {
+            throw new EmptyResultDataAccessException("No se encontró el ID: " + id, 1);
+        }
         inscribirRepository.deleteById(id);
     }
+
 }

@@ -1,53 +1,29 @@
 package mx.uam.integracion.Inscripciones.mapper;
 
 import mx.uam.integracion.Inscripciones.dto.InscribirDTO;
-import mx.uam.integracion.Inscripciones.entities.Alumno;
-import mx.uam.integracion.Inscripciones.entities.Curso;
 import mx.uam.integracion.Inscripciones.entities.Inscribir;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface InscribirMapper {
     InscribirMapper INSTANCE = Mappers.getMapper(InscribirMapper.class);
 
-    Inscribir inscribirDTOToInscribir(InscribirDTO inscribirDTO);
-
+    // Mapear entidad -> DTO (incluidos los datos completos de alumno y curso)
+    @Mappings({
+        @Mapping(source = "alumnoId.id", target = "alumnoId"),
+        @Mapping(source = "cursoId.id", target = "cursoId"),
+        @Mapping(source = "alumnoId", target = "alumno"),
+        @Mapping(source = "cursoId", target = "curso")
+    })
     InscribirDTO inscribirToInscribirDTO(Inscribir inscribir);
 
-    // Método para mapear Long a Alumno
-    default Alumno map(Long alumnoId) {
-        if (alumnoId == null) {
-            return null;
-        }
-        Alumno alumno = new Alumno();
-        alumno.setId(alumnoId);
-        return alumno;
-    }
-
-    // Método para mapear Long a Curso
-    default Curso mapCurso(Long cursoId) {
-        if (cursoId == null) {
-            return null;
-        }
-        Curso curso = new Curso();
-        curso.setId(cursoId);
-        return curso;
-    }
-
-    // Método para mapear Alumno a Long
-    default Long map(Alumno alumno) {
-        if (alumno == null) {
-            return null;
-        }
-        return alumno.getId();
-    }
-
-    // Método para mapear Curso a Long
-    default Long map(Curso curso) {
-        if (curso == null) {
-            return null;
-        }
-        return curso.getId();
-    }
+    // Mapear DTO -> entidad (usamos solo los IDs para crear o actualizar)
+    @Mappings({
+        @Mapping(source = "alumnoId", target = "alumnoId.id"),
+        @Mapping(source = "cursoId", target = "cursoId.id")
+    })
+    Inscribir inscribirDTOToInscribir(InscribirDTO inscribirDTO);
 }
