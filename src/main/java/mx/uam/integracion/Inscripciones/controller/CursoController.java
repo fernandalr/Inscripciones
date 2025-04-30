@@ -1,4 +1,5 @@
 package mx.uam.integracion.Inscripciones.controller;
+
 import mx.uam.integracion.Inscripciones.dto.CursoDTO;
 import mx.uam.integracion.Inscripciones.entities.Curso;
 import mx.uam.integracion.Inscripciones.service.ICursoService;
@@ -33,27 +34,46 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<CursoDTO> createCurso(@RequestBody CursoDTO cursoDTO) {
-        CursoDTO createdCurso = cursoService.save(cursoDTO);
-        return new ResponseEntity<>(createdCurso, HttpStatus.CREATED);
+    public ResponseEntity<String> createCurso(@RequestBody CursoDTO cursoDTO) {
+        try {
+            CursoDTO createdCurso = cursoService.save(cursoDTO);
+            System.out.println("Curso creado: " + createdCurso);
+            return new ResponseEntity<>("Curso creado con éxito.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al crear el curso. " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
-
-
     @PutMapping("/{id}")
-    public ResponseEntity<CursoDTO> updateCurso(@PathVariable Long id, @RequestBody CursoDTO cursoDTO) {
+    public ResponseEntity<String> updateCurso(@PathVariable Long id, @RequestBody CursoDTO cursoDTO) {
         try {
             CursoDTO updatedCurso = cursoService.update(id, cursoDTO);
-            return new ResponseEntity<>(updatedCurso, HttpStatus.OK);
+            System.out.println("Curso actualizado: " + updatedCurso);
+            return new ResponseEntity<>("Curso actualizado con éxito.", HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Error al actualizar el curso. " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> partialUpdateCurso(@PathVariable Long id, @RequestBody CursoDTO cursoDTO) {
+        try {
+            CursoDTO updatedCurso = cursoService.update(id, cursoDTO);
+            System.out.println("Curso actualizado parcialmente: " + updatedCurso);
+            return new ResponseEntity<>("Curso actualizado parcialmente con éxito.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al actualizar el curso parcialmente. " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCurso(@PathVariable Long id) {
-        cursoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+    public ResponseEntity<String> deleteCurso(@PathVariable Long id) {
+        try {
+            cursoService.delete(id);
+            System.out.println("Curso eliminado con ID: " + id);
+            return new ResponseEntity<>("Curso eliminado con éxito.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error al eliminar el curso. " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

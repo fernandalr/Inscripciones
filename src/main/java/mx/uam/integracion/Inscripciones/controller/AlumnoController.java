@@ -20,14 +20,14 @@ public class AlumnoController {
         this.alumnoService = alumnoService;
     }
 
-    //Obtener todos los registros
+    // Obtener todos los registros
     @GetMapping
     public ResponseEntity<List<AlumnoDTO>> getAllAlumnos() {
         List<AlumnoDTO> alumnos = alumnoService.getAll();
         return new ResponseEntity<>(alumnos, HttpStatus.OK);
     }
 
-    //Obtener el registro del alumno por id
+    // Obtener el registro del alumno por id
     @GetMapping("/{id}")
     public ResponseEntity<AlumnoDTO> getAlumno(@PathVariable Long id) {
         return alumnoService.getById(id)
@@ -35,35 +35,51 @@ public class AlumnoController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    //Crear alumno
+    // Crear alumno
     @PostMapping
-    public ResponseEntity<AlumnoDTO> createAlumno(@RequestBody AlumnoDTO alumnoDTO) {
+    public ResponseEntity<String> createAlumno(@RequestBody AlumnoDTO alumnoDTO) {
         try {
             AlumnoDTO createdAlumno = alumnoService.save(alumnoDTO);
-            return new ResponseEntity<>(createdAlumno, HttpStatus.CREATED);
+            System.out.println("Alumno creado: " + createdAlumno);
+            return new ResponseEntity<>("Alumno creado con éxito.", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error al crear el alumno. " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    //Actualizar por id
+    // Actualizar alumno completamente por ID
     @PutMapping("/{id}")
-    public ResponseEntity<AlumnoDTO> updateAlumno(@PathVariable Long id, @RequestBody AlumnoDTO alumnoDTO) {
+    public ResponseEntity<String> updateAlumno(@PathVariable Long id, @RequestBody AlumnoDTO alumnoDTO) {
         try {
             AlumnoDTO updatedAlumno = alumnoService.update(id, alumnoDTO);
-            return new ResponseEntity<>(updatedAlumno, HttpStatus.OK);
+            System.out.println("Alumno actualizado: " + updatedAlumno);
+            return new ResponseEntity<>("Alumno actualizado con éxito.", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error al actualizar el alumno. " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Actualización parcial del alumno
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> partialUpdateAlumno(@PathVariable Long id, @RequestBody AlumnoDTO alumnoDTO) {
+        try {
+            // Implementación lógica para actualizar parcialmente, reutilizando `update`
+            AlumnoDTO updatedAlumno = alumnoService.update(id, alumnoDTO);
+            System.out.println("Alumno actualizado parcialmente: " + updatedAlumno);
+            return new ResponseEntity<>("Alumno actualizado parcialmente con éxito.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al actualizar parcialmente el alumno. " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAlumno(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAlumno(@PathVariable Long id) {
         try {
             alumnoService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            System.out.println("Alumno eliminado con ID: " + id);
+            return new ResponseEntity<>("Alumno eliminado con éxito.", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Error al eliminar el alumno. " + e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -5,6 +5,7 @@ import mx.uam.integracion.Inscripciones.mapper.CursoMapper;
 import mx.uam.integracion.Inscripciones.repository.ICursoRepository;
 import mx.uam.integracion.Inscripciones.service.ICursoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,9 +49,11 @@ public class CursoServiceImpl implements ICursoService {
         Curso updated = cursoRepository.save(curso);
         return CursoMapper.INSTANCE.cursoToCursoDTO(updated);
     }
-
     @Override
     public void delete(Long id) {
+        if (!cursoRepository.existsById(id)) {
+            throw new EmptyResultDataAccessException("No se encontró el ID: " + id, 1);
+        }
         cursoRepository.deleteById(id);
     }
 }
